@@ -18,7 +18,6 @@ export class AnalyticsHandler {
   }
 
   async calculateEngagementMetrics(accountId: number, platform: string): Promise<any> {
-    // Simulate complex engagement calculation
     const metrics = {
       engagementRate: Math.random() * 100,
       totalInteractions: Math.floor(Math.random() * 1000),
