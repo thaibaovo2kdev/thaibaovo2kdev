@@ -37,7 +37,7 @@
 ---
 
 ## 🧩 Cấu trúc thư mục chính
-
+```bash
 src/
 ├── auth/ # Đăng nhập, xác thực
 ├── dashboard/ # Thống kê tổng quan bài viết
@@ -49,7 +49,7 @@ src/
 ├── entities/ # TypeORM entities
 ├── common/ # Global filter, guard, interceptor
 ├── utils/ # Tiện ích (localize, logger...)
-
+```
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
@@ -105,7 +105,7 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 Env ví dụ
-```
+```bash
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres
