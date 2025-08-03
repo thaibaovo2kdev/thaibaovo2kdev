@@ -2,18 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BaseSocialService } from '../../../shared/base/base-social.service';
-import { InstagramAccount } from './instagram.entity';
-import { InstagramAccountDto } from './instagram.dto';
-import { InstagramHandler } from './instagram.handler';
+import { FacebookAccount } from './facebook.entity';
+import { FacebookAccountDto } from './facebook.dto';
+import { FacebookHandler } from './facebook.handler';
 import { LoggerService } from '../../../shared/logger/logger.service';
 import { PermissionService } from '../../../modules/permission/permission.service';
 
 @Injectable()
-export class InstagramService extends BaseSocialService<InstagramAccount, InstagramAccountDto> {
+export class FacebookService extends BaseSocialService<FacebookAccount, FacebookAccountDto> {
   constructor(
-    @InjectRepository(InstagramAccount)
-    repository: Repository<InstagramAccount>,
-    handler: InstagramHandler,
+    @InjectRepository(FacebookAccount)
+    repository: Repository<FacebookAccount>,
+    handler: FacebookHandler,
     logger: LoggerService,
     permissionService: PermissionService,
   ) {
@@ -21,6 +21,6 @@ export class InstagramService extends BaseSocialService<InstagramAccount, Instag
   }
 
   getPlatform(): string {
-    return 'instagram';
+    return 'facebook';
   }
 }

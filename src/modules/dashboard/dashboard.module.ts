@@ -1,14 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
-import { DashboardService } from './dashboard.service';
-import { DashboardController } from './dashboard.controller';
-import { User } from 'src/entities/user.entity';
-import { ScheduledPost } from 'src/entities/scheduled-post.entity';
+import { AnalyticsModule } from './analytics/analytics.module';
+import { ReportsModule } from './reports/reports.module';
+import { LoggerService } from '../../shared/logger/logger.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, ScheduledPost])],
-  controllers: [DashboardController],
-  providers: [DashboardService],
+  imports: [AnalyticsModule, ReportsModule],
+  providers: [LoggerService],
 })
 export class DashboardModule {}
