@@ -1,25 +1,54 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  <a href="http://nestjs.com/" target="blank">
+    <img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" />
+  </a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+<p align="center">
+  <b>Social Manager</b> – Lên lịch & quản lý bài đăng mạng xã hội sử dụng NestJS
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+
+<p align="center">
+  <a href="https://www.npmjs.com/~nestjs" target="_blank">
+    <img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" />
+  </a>
+  <a href="https://www.npmjs.com/~nestjs" target="_blank">
+    <img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" />
+  </a>
+  <a href="https://circleci.com/gh/nestjs/nest" target="_blank">
+    <img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" />
+  </a>
+  <a href="https://discord.gg/G7Qnnhy" target="_blank">
+    <img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/>
+  </a>
+</p>
+
+---
+
+## 📘 Mô tả
+
+**Social Manager** là hệ thống backend được phát triển bằng [NestJS](https://nestjs.com), dùng để:
+- Lên lịch đăng bài lên Instagram
+- Quản lý bài viết theo user
+- Hỗ trợ retry + xử lý bất đồng bộ với RabbitMQ
+- Quản lý bài đăng thất bại/thành công
+- Phân quyền người dùng và thống kê hiệu suất
+
+---
+
+## 🧩 Cấu trúc thư mục chính
+
+src/
+├── auth/ # Đăng nhập, xác thực
+├── dashboard/ # Thống kê tổng quan bài viết
+├── analytics/ # Phân tích lượt đăng thành công/thất bại
+├── permission/ # Guard & role base access
+├── social/
+│ └── instagram/ # Xử lý API bài viết Instagram
+├── workers/ # RabbitMQ consumer xử lý đăng bài
+├── entities/ # TypeORM entities
+├── common/ # Global filter, guard, interceptor
+├── utils/ # Tiện ích (localize, logger...)
 
 ## Description
 
@@ -27,15 +56,34 @@
 
 ## Project setup
 
-```bash
-$ npm install
-```
 
-## Compile and run the project
+---
+
+## 🔄 Luồng hoạt động
+
+1. Người dùng gọi API để tạo bài viết và `scheduleTime`
+2. Bài viết được lưu DB với trạng thái `pending`
+3. Cronjob hoặc scheduler kiểm tra bài đến hạn
+4. Gửi job vào hàng đợi RabbitMQ
+5. Worker xử lý: gửi bài → `success` / `retry` / `failed`
+
+---
+
+## 🚀 Cài đặt
 
 ```bash
-# development
-$ npm run start
+# Clone
+git clone https://github.com/your-username/social-manager.git
+cd social-manager
+
+# Cài package
+npm install
+
+# Cấu hình env
+cp .env.example .env
+
+# Chạy DB và RabbitMQ (nếu dùng Docker)
+docker-compose up -d
 
 # watch mode
 $ npm run start:dev
@@ -55,6 +103,16 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+Env ví dụ
+```
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASS=postgres
+DB_NAME=social_manager
+JWT_SECRET=mysecretkey
+RABBITMQ_URL=amqp://localhost:5672
 ```
 
 ## Deployment
