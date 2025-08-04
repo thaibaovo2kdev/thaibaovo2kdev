@@ -14,7 +14,7 @@ I am a dynamic and resourceful developer, always seeking ways to improve user ex
 
 ## 📫 Contact
 
-- **Email:** [thaibaovo2k@gmail.com](mailto:thaibaovo2k@gmail.com)
+- **Email:** [thaibaovo2kdev@gmail.com](mailto:thaibaovo2k@gmail.com)
 - **Phone:** 0877602061
 
 
