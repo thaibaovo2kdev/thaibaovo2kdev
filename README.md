@@ -10,7 +10,7 @@
 
 ## ✨ Summary
 
-I am a dynamic and resourceful developer, always seeking ways to improve user experience and optimize application performance. I possess strong communication skills and work effectively in team environments.
+Full-stack Engineer with 4+ years of experience designing, building, and operating scalable web applications and backend systems. Strong expertise in system architecture, API design, and data-intensive workflows, with hands-on experience across modern front-end and back-end stacks. Proven ability to translate complex business requirements into robust technical solutions while optimizing performance, reliability, and maintainability using industry-standard engineering practices.
 
 ## 📫 Contact
 
